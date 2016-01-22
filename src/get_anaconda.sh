@@ -2,7 +2,7 @@
 HOME=/home/condauser
 
 # Download Anaconda
-Anaconda3=https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.2.0-Linux-x86_64.sh
+Anaconda3=https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 if [ ! -f /tmp/Anaconda.sh ];
 then
 	# Normal build will download Anaconda directly to user's directory
