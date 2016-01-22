@@ -15,9 +15,10 @@ RUN conda install --yes \
     'scipy=0.16*' \
     'seaborn=0.6*' \
     'sympy=0.7*' \
+    scikit-learn \
     && conda clean -yt
 
-RUN pip install poppy-ergo-jr poppy-torso poppy-humanoid
+RUN pip install poppy-ergo-jr poppy-torso poppy-humanoid explauto
 
 # Install Python 2 packages
 RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
@@ -29,11 +30,12 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'seaborn=0.6*' \
     'sympy=0.7*' \
     'statsmodels=0.6*' \
+    scikit-learn \
     pyzmq \
     && conda clean -yt
 
 RUN /bin/bash -c "source activate $CONDA_DIR/envs/python2"
-RUN pip install poppy-ergo-jr poppy-torso poppy-humanoid
+RUN pip install poppy-ergo-jr poppy-torso poppy-humanoid explauto
 
 USER root
 
