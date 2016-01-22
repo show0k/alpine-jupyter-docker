@@ -5,6 +5,8 @@ MAINTAINER Théo Segonds <theo.segonds@inria.fr>
 
 USER jovyan
 
+ADD notebooks/ /home/jovyan/work
+
 # Install Python 3 packages
 RUN conda install --yes \
     'ipywidgets=4.0*' \
