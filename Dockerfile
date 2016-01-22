@@ -32,7 +32,7 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     pyzmq \
     && conda clean -yt
 
-RUN source activate python2 
+RUN source activate $CONDA_DIR/envs/python2
 RUN pip install poppy-ergo-jr poppy-torso poppy-humanoid
 
 USER root
