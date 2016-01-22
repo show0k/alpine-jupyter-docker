@@ -23,7 +23,7 @@ echo "
 export PATH=\"$PY3PATH:\$PATH\"" >> $BASH_RC
 
 hash -r
-conda config --set always_yes yes --set changeps1 no
+$CONDA3 config --set always_yes yes --set changeps1 no
 
 # additional packages to install
 $CONDA3 install --yes seaborn numpy scipy matplotlib pyzmq flake8 ipython-notebook

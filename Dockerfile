@@ -1,52 +1,61 @@
-FROM debian:jessie
-MAINTAINER Théo Segonds "theo.segonds@inria.fr"
+FROM jupyter/minimal-notebook
 
-# Link in our build files to the docker image
-ADD src/ /tmp
+# Inspired from https://github.com/jupyter/docker-stacks/blob/master/scipy-notebook/Dockerfile
+MAINTAINER Théo Segonds <theo.segonds@inria.fr>
 
-# Run all ubuntu updates and apt-get installs
-RUN export DEBIAN_FRONTEND=noninteractive && \
-	apt-get update && \
-	apt-get upgrade -y && \
-	apt-get install -y git \
-		wget \
-		bzip2 \
-		build-essential \
-		python-dev \
-		gfortran \
-	&& apt-get clean
+USER jovyan
 
-# Create conda user, get anaconda by web or locally
-RUN useradd --create-home --home-dir /home/condauser --shell /bin/bash condauser
-RUN /tmp/get_anaconda.sh
+# Install Python 3 packages
+RUN conda install --yes \
+    'ipywidgets=4.0*' \
+    'pandas=0.17*' \
+    'matplotlib=1.4*' \
+    'scipy=0.16*' \
+    'seaborn=0.6*' \
+    'scikit-learn=0.16*' \
+    'scikit-image=0.11*' \
+    'sympy=0.7*' \
+    'cython=0.22*' \
+    'patsy=0.4*' \
+    'statsmodels=0.6*' \
+    'cloudpickle=0.1*' \
+    'dill=0.2*' \
+    'numba=0.22*' \
+    'bokeh=0.10*' \
+    && conda clean -yt
 
-# Run all python installs
-# Perform any cleanup of the install as needed
-USER condauser
-RUN /tmp/install.sh
+RUN pip install poppy-ergo-jr poppy-torso poppy-humanoid
 
-# Copy notebook config into ipython directory
-# Make sure our user owns the directory
+# Install Python 2 packages
+RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
+    'ipython=4.0*' \
+    'ipywidgets=4.0*' \
+    'pandas=0.17*' \
+    'matplotlib=1.4*' \
+    'scipy=0.16*' \
+    'seaborn=0.6*' \
+    'scikit-learn=0.16*' \
+    'scikit-image=0.11*' \
+    'sympy=0.7*' \
+    'cython=0.22*' \
+    'patsy=0.4*' \
+    'statsmodels=0.6*' \
+    'cloudpickle=0.1*' \
+    'dill=0.2*' \
+    'numba=0.22*' \
+    'bokeh=0.10*' \
+    pyzmq \
+    && conda clean -yt
+
+RUN source activate python2 
+RUN pip install poppy-ergo-jr poppy-torso poppy-humanoid
+
 USER root
-RUN  apt-get --purge -y autoremove wget && \
-	cp /tmp/ipython_notebook_config.py /home/condauser/.ipython/profile_default/ && \
-	cp /tmp/matplotlib_nb_init.py /home/condauser/.ipython/profile_default/startup && \
-	chown condauser:condauser /home/condauser -R
 
-# Set persistent environment variables for python3 and python2
-ENV PY2PATH=/home/condauser/anaconda3/envs/python2/bin
-ENV PY3PATH=/home/condauser/anaconda3/bin
+# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
+# switching at runtime.
+RUN $CONDA_DIR/envs/python2/bin/python \
+    $CONDA_DIR/envs/python2/bin/ipython \
+    kernelspec install-self
 
-# Install the python2 ipython kernel
-RUN $PY2PATH/python $PY2PATH/ipython kernelspec install-self
-
-# Setup our environment for running the ipython notebook
-# Setting user here makes sure ipython notebook is run as user, not root
-EXPOSE 8888
-USER condauser
-ENV HOME=/home/condauser
-ENV SHELL=/bin/bash
-ENV USER=condauser
-WORKDIR /home/condauser/notebooks
-
-CMD $PY3PATH/ipython notebook
+USER jovyan
