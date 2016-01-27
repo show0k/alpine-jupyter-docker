@@ -1,4 +1,4 @@
-FROM show0k/alpine-minimal-notebook
+FROM show0k/alpine-miniconda
 MAINTAINER Théo Segonds <theo.segonds@inria.fr>
 
 
