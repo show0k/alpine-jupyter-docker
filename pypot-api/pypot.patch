@@ -1,0 +1,36 @@
+From cae1f5c6b961e168c4850a65b9408da05b2d77eb Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Th=C3=A9o=20Segonds?= <theo.segonds@inria.fr>
+Date: Wed, 27 Jan 2016 16:39:49 +0100
+Subject: [PATCH] add URL for making works viewer with snap api
+
+---
+ pypot/server/snap.py | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/pypot/server/snap.py b/pypot/server/snap.py
+index be526f1..cbf297a 100644
+--- a/pypot/server/snap.py
++++ b/pypot/server/snap.py
+@@ -96,6 +96,19 @@ class SnapRobotServer(AbstractServer):
+                            for m in rr.get_motors_list())
+             return msg
+ 
++        # Dirty copy from http api for the js viewer
++        @self.app.get('/motors/register/<register_name>')
++        def get_motors_register_value(register_name):
++            motors_list = rr.get_motors_list('motors')
++            registers_motors = {}
++
++            for motor_name in motors_list:
++                registers_motors[motor_name] = {
++                    register_name: rr.get_motor_register_value(motor_name, register_name)
++                }
++
++            return registers_motors
++
+         @self.app.get('/motors/alias')
+         def get_robot_aliases():
+             return '/'.join('{}'.format(alias) for alias in rr.get_motors_alias())
+-- 
+1.9.1
+

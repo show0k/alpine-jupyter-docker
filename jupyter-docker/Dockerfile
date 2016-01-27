@@ -16,6 +16,7 @@ RUN conda install --yes \
     'seaborn=0.6*' \
     'sympy=0.7*' \
     scikit-learn \
+    flask \
     && conda clean -yt
 
 RUN pip install poppy-ergo-jr poppy-torso poppy-humanoid explauto
@@ -32,6 +33,7 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'statsmodels=0.6*' \
     scikit-learn \
     pyzmq \
+    flask \
     && conda clean -yt
 
 RUN /bin/bash -c "source activate $CONDA_DIR/envs/python2"
@@ -44,6 +46,14 @@ EXPOSE 6969
 
 # Pypot HTTP API
 EXPOSE 8080
+
+# Jupyter Notebook
+EXPOSE 8889
+
+
+
+COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
+
 
 # Install Python 2 kernel spec globally to avoid permission problems when NB_UID
 # switching at runtime.
