@@ -44,6 +44,7 @@ ENV LANGUAGE en_US.UTF-8
 ENV MINICONDA_VER 3.18.3
 ENV MINICONDA Miniconda3-$MINICONDA_VER-Linux-x86_64.sh
 ENV MINICONDA_URL https://repo.continuum.io/miniconda/$MINICONDA
+ENV MINICONDA_SUM 6eee19f7ac958578b0da4124f58b09f23422fa6f6b26af8b594a47f08cc61af4
 
 # Create jovyan user with UID=1000 and in the 'users' group
 RUN adduser -s /bin/bash -u $NB_UID -D $NB_USER && \
@@ -61,6 +62,7 @@ RUN mkdir /home/$NB_USER/work && \
 RUN cd /tmp && \
     mkdir -p $CONDA_DIR && \
     curl -L $MINICONDA_URL  -o miniconda.sh && \
+    echo "$MINICONDA_SUM  miniconda.sh" | sha256sum -c - && \
     /bin/bash miniconda.sh -f -b -p $CONDA_DIR && \
     rm miniconda.sh && \
     $CONDA_DIR/bin/conda install --yes conda==$MINICONDA_VER
