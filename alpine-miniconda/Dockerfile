@@ -40,6 +40,11 @@ ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
+# Configure Miniconda
+ENV MINICONDA_VER 3.18.3
+ENV MINICONDA Miniconda3-$MINICONDA_VER-Linux-x86_64.sh
+ENV MINICONDA_URL https://repo.continuum.io/miniconda/$MINICONDA
+
 # Create jovyan user with UID=1000 and in the 'users' group
 RUN adduser -s /bin/bash -u $NB_UID -D $NB_USER && \
     mkdir -p /opt/conda && \
@@ -55,10 +60,10 @@ RUN mkdir /home/$NB_USER/work && \
 # Install conda as jovyan
 RUN cd /tmp && \
     mkdir -p $CONDA_DIR && \
-    curl https://repo.continuum.io/miniconda/Miniconda3-3.18.3-Linux-x86_64.sh  -o miniconda.sh && \
+    curl -L $MINICONDA_URL  -o miniconda.sh && \
     /bin/bash miniconda.sh -f -b -p $CONDA_DIR && \
     rm miniconda.sh && \
-    $CONDA_DIR/bin/conda install --yes conda==3.18.3
+    $CONDA_DIR/bin/conda install --yes conda==$MINICONDA_VER
 
 
 USER root
