@@ -66,7 +66,7 @@ USER root
 
 # Configure container startup as root
 WORKDIR /home/$NB_USER/work
-ENTRYPOINT ["tini", "--"]
+ENTRYPOINT ["/sbin/tini", "--"]
 CMD [ "/bin/bash" ]
 
 # Switch back to jovyan to avoid accidental container runs as root

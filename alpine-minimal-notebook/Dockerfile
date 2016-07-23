@@ -34,7 +34,7 @@ USER root
 # Configure container startup as root
 EXPOSE 8888
 WORKDIR /home/$NB_USER/work
-ENTRYPOINT ["tini", "--"]
+ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["start-notebook.sh"]
 
 # Add local files as late as possible to avoid cache busting
