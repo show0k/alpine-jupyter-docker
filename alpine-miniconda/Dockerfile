@@ -6,8 +6,8 @@ MAINTAINER Théo Segonds <theo.segonds@inria.fr>
 # * https://github.com/CognitiveScale/alpine-miniconda
 
 
-# Install glibc and usefull packeges
-RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \ 
+# Install glibc and useful packages
+RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
     && apk --update add \
     bash \
     git \
@@ -41,10 +41,10 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
 # Configure Miniconda
-ENV MINICONDA_VER 4.0.5
+ENV MINICONDA_VER 4.2.12
 ENV MINICONDA Miniconda3-$MINICONDA_VER-Linux-x86_64.sh
 ENV MINICONDA_URL https://repo.continuum.io/miniconda/$MINICONDA
-ENV MINICONDA_SUM e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+ENV MINICONDA_MD5_SUM d0c7c71cc5659e54ab51f2005a8d96f3
 
 # Create jovyan user with UID=1000 and in the 'users' group
 RUN adduser -s /bin/bash -u $NB_UID -D $NB_USER && \
@@ -62,7 +62,7 @@ RUN mkdir /home/$NB_USER/work && \
 RUN cd /tmp && \
     mkdir -p $CONDA_DIR && \
     curl -L $MINICONDA_URL  -o miniconda.sh && \
-    echo "$MINICONDA_SUM  miniconda.sh" | sha256sum -c - && \
+    echo "$MINICONDA_MD5_SUM  miniconda.sh" | md5sum -c - && \
     /bin/bash miniconda.sh -f -b -p $CONDA_DIR && \
     rm miniconda.sh && \
     $CONDA_DIR/bin/conda install --yes conda==$MINICONDA_VER
