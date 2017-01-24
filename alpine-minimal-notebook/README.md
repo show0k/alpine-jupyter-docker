@@ -1,4 +1,4 @@
-[![](https://images.microbadger.com/badges/image/show0k/alpine-minimal-notebook.svg)](https://microbadger.com/images/show0k/alpine-minimal-notebook)
+[![](https://images.microbadger.com/badges/image/show0k/alpine-minimal-notebook.svg)](https://hub.docker.com/r/show0k/alpine-minimal-notebook/)
 # Minimal Jupyter Notebook Stack
 
 Thanks to Alpine Linux, this image is 180MB smaller than the official Jupyter image based on Ubuntu ([160MB](https://microbadger.com/images/show0k/alpine-minimal-notebook) vs [340MB](https://microbadger.com/images/jupyter/notebook)).
