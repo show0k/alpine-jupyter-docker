@@ -1,4 +1,4 @@
-[![](https://images.microbadger.com/badges/image/show0k/alpine-miniconda.svg)](https://hub.docker.com/r/show0k/alpine-minimal/)
+[![](https://images.microbadger.com/badges/image/show0k/alpine-miniconda.svg)](https://hub.docker.com/r/show0k/alpine-miniconda/)
 # Alpine Miniconda
 
 Safe Miniconda install in an Alpine Linux container.
