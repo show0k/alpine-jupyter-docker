@@ -1,7 +1,12 @@
 FROM show0k/alpine-miniconda
 MAINTAINER Théo Segonds <theo.segonds@inria.fr>
 
-# Inspired from :
+ARG VCS_REF
+
+LABEL org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/show0k/alpine-jupyter-docker/tree/master/alpine-miniconda"
+
+# Inspired by :
 # * https://github.com/jupyter/docker-stacks
 # * https://github.com/CognitiveScale/alpine-miniconda
 
@@ -12,9 +17,9 @@ COPY mitch.tishmack@gmail.com-55881c97.rsa.pub /etc/apk/keys/mitch.tishmack@gmai
 
 # Install haskell compiler for building pandoc
 RUN echo "https://s3-us-west-2.amazonaws.com/alpine-ghc/7.10" >> /etc/apk/repositories && \
-    echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \ 
+    echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk --update add \
-    texlive@testing 
+    texlive@testing
 # Pandoc is taking 1.2GB, need to work on it
 #    ghc cabal-install stack bash linux-headers musl-dev gmp-dev zlib-dev make && \
 #    cabal update && \

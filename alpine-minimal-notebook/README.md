@@ -1,4 +1,8 @@
+[![](https://images.microbadger.com/badges/image/show0k/alpine-minimal-notebook.svg)](https://microbadger.com/images/show0k/alpine-minimal-notebook)
 # Minimal Jupyter Notebook Stack
+
+Thanks to Alpine Linux, this image is 180MB smaller than the official Jupyter image based on Ubuntu ([160MB](https://microbadger.com/images/show0k/alpine-minimal-notebook) vs [340MB](https://microbadger.com/images/jupyter/notebook)).
+
 
 ## What it Gives You
 
@@ -14,7 +18,7 @@
 The following command starts a container with the Notebook server listening for HTTP connections on port 8888 without authentication configured.
 
 ```
-docker run -d -p 8888:8888 jupyter/minimal-notebook
+docker run -d -p 8888:8888 show0k/alpine-miniconda-notebook
 ```
 
 ## Notebook Options
@@ -22,7 +26,7 @@ docker run -d -p 8888:8888 jupyter/minimal-notebook
 You can pass [Jupyter command line options](http://jupyter.readthedocs.org/en/latest/config.html#command-line-arguments) through the [`start-notebook.sh` command](https://github.com/jupyter/docker-stacks/blob/master/minimal-notebook/start-notebook.sh#L15) when launching the container. For example, to set the base URL of the notebook server you might do the following:
 
 ```
-docker run -d -p 8888:8888 jupyter/minimal-notebook start-notebook.sh --NotebookApp.base_url=/some/path
+docker run -d -p 8888:8888 show0k/alpine-miniconda-notebook start-notebook.sh --NotebookApp.base_url=/some/path
 ```
 
 You can sidestep the `start-notebook.sh` script entirely by specifying a command other than `start-notebook.sh`. If you do, the `NB_USER` and `GRANT_SUDO` features documented below will not work. See the Docker Options section for details.

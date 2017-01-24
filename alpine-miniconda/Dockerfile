@@ -1,7 +1,12 @@
 FROM alpine:latest
 MAINTAINER Théo Segonds <theo.segonds@inria.fr>
 
-# Inspired from :
+ARG VCS_REF
+
+LABEL org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/show0k/alpine-jupyter-docker/tree/master/alpine-miniconda"
+
+# Inspired by :
 # * https://github.com/jupyter/docker-stacks
 # * https://github.com/CognitiveScale/alpine-miniconda
 
